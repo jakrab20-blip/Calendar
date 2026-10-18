@@ -29,6 +29,7 @@ jobs:
           if [ "$(ls -A | wc -l)" = "1" ] && [ -d "$(ls -A)" ]; then cd "$(ls -A)"; fi
           npm install --no-audit --no-fund
           npx cap add android
+          [ -f native/patch.py ] && python3 native/patch.py
           M=android/app/src/main/AndroidManifest.xml
           for P in POST_NOTIFICATIONS SCHEDULE_EXACT_ALARM USE_EXACT_ALARM RECORD_AUDIO VIBRATE RECEIVE_BOOT_COMPLETED; do
             sed -i "s#</manifest>#    <uses-permission android:name=\"android.permission.$P\"/>\n</manifest>#" "$M"
